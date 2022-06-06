@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% block title %}
+    Home
+{% endblock title %}
+{% block content %}
+  <!--Carousel Wrapper-->
+  <div id="carousel-example-1z" class="carousel slide carousel-fade pt-4" data-ride="carousel">
+
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+        {% if not request.user.is_authenticated %}
+      <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+        {% endif %}
+      <li data-target="#carousel-example-1z" data-slide-to="1" {% if request.user.is_authenticated %} class="active" {% endif %}></li>
+      <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+    </ol>
+    <!--/.Indicators-->
+
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+
+      <!--First slide-->
+      {% if not request.user.is_authenticated %}
+      <div class="carousel-item active">
+        <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%282%29.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+          <!-- Mask & flexbox options-->
+          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+            <!-- Content -->
+            <div class="text-center white-text mx-5 wow fadeIn">
+              <h1 class="mb-4">
+                <strong>Create a new account if you are not subscribed yet</strong>
+              </h1>
+
+              <p>
+                <strong>In our site, you will find  all the products you need with the best prices</strong>
+              </p>
+
+              <a href="/accounts/signup" class="btn btn-outline-white btn-lg">Sign-up now
+                <i class="fas fa-user-plus ml-2"></i>
+              </a>
+
+            </div>
+            <!-- Content -->
+
+          </div>
+          <!-- Mask & flexbox options-->
+
+        </div>
+      </div>
+      {% endif %}
+      <!--/First slide-->
+
+      <!--Second slide-->
+      <div class="carousel-item {% if request.user.is_authenticated %} active {% endif %}">
+        <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%283%29.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+          <!-- Mask & flexbox options-->
+          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+            <!-- Content -->
+            <div class="text-center white-text mx-5 wow fadeIn">
+              <h1 class="mb-4">
+                <strong>Discounts!</strong>
+              </h1>
+
+              <p>
+                <strong>Browse our products with the best discounts in the market for a limited period of time and save a lot of money</strong>
+              </p>
+
+              <a href="{% url 'core:products_with_discount' %}" class="btn btn-outline-white btn-lg">See discounts
+                <i class="fas fa-wallet ml-2"></i>
+              </a>
+            </div>
+            <!-- Content -->
+
+          </div>
+          <!-- Mask & flexbox options-->
+
+        </div>
+      </div>
+      <!--/Second slide-->
+
+      <!--Third slide-->
+      <div class="carousel-item">
+        <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/8-col/img%285%29.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+          <!-- Mask & flexbox options-->
+          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+            <!-- Content -->
+            <div class="text-center white-text mx-5 wow fadeIn">
+              <h1 class="mb-4">
+                <strong>Shopping</strong>
+              </h1>
+
+              <p>
+                <strong>Here you can find all of our products</strong>
+              </p>
+
+              <a href="{% url 'core:get_all_products' %}" class="btn btn-outline-white btn-lg">Shop
+                <i class="fas fa-shopping-cart ml-2"></i>
+              </a>
+            </div>
+            <!-- Content -->
+
+          </div>
+          <!-- Mask & flexbox options-->
+
+        </div>
+      </div>
+      <!--/Third slide-->
+
+    </div>
+    <!--/.Slides-->
+
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+
+  </div>
+  <!--/.Carousel Wrapper-->
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Categories:</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url "core:get_all_products" %}">All
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "core:products_with_discount" %}">Discounts</a>
+            </li>
+            {% for key, category in categories.items %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "core:get_products_by_category" key %}">{{ category }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          <!-- Links -->
+
+          <div class="form-inline">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="search_text">
+            </div>
+          </div>
+        </div>
+        <!-- Collapsible content -->
+
+      </nav>
+      <!--/.Navbar-->
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <!--Grid row-->
+        <div class="row wow fadeIn" id="cards">
+
+          <!--Grid column-->
+          {% for item in object_list %}
+          <div class="col-lg-3 col-md-6 mb-4" id="card">
+
+            <!--Card-->
+            <div class="card" style="height: 450px">
+
+              <!--Card image-->
+              <div class="view overlay">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" style="margin: 0;position: absolute;top: 50%;-ms-transform: translateY(-50%);transform: translateY(-50%);max-height: 300px">
+                {% endif %}
+                <a href="{{ item.get_absolute_url }}" class="link">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <!--Card image-->
+
+              <!--Card content-->
+              <div class="card-body text-center">
+                <!--Category & Title-->
+                <a href="{{ item.get_absolute_url }}" class="grey-text">
+                  <h5>{{ item.get_category_display }}</h5>
+                </a>
+                <h5>
+                  <strong>
+                    <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                    {% if item.is_new_verif %}
+                      <span class="badge badge-pill primary-color">NEW</span>
+                    {% endif %}
+                    {% if item.discount_price %}
+                      <div class="badge badge-pill danger-color">DISCOUNT</div>
+                    {% endif %}
+                    </a>
+                  </strong>
+                </h5>
+
+                <h4 class="font-weight-bold blue-text">
+                  <strong>
+                      {% if item.discount_price %}
+                          ${{ item.discount_price }}
+                      {% else %}
+                          ${{ item.price }}
+                      {% endif %}
+                  </strong>
+                </h4>
+
+              </div>
+              <!--Card content-->
+
+            </div>
+            <!--Card-->
+
+          </div>
+          {% endfor %}
+          <!--Grid column-->
+        </div>
+      </section>
+      <!--Section: Products v.3-->
+
+      <!--Pagination-->
+      {% if is_paginated %}
+      <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+          <!--Arrow left-->
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ page_obj.number }}">{{page_obj.number}}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      <!--Pagination-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endblock content %}
+{% block extra_scripts %}
+    <script>
+      $(document).ready(function(){
+            $("#search_text").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#cards #card").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

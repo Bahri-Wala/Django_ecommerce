@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Request Refund
+{% endblock title %}
+{% block content %}
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+      <h2>Request Refund</h2>
+      <form method="post">
+      {% csrf_token %}
+        <div id="div_id_email" class="form-group">
+          <label for="id_email" class=" requiredField">Email<span class="asteriskField">*</span></label>
+          <input type="email" name="email" class="emailinput form-control" required id="id_email">
+        </div>
+        <div id="div_id_ref_code" class="form-group">
+          <input type="hidden" name="ref_code" class="textinput textInput form-control" id="id_ref_code" value="{{ ref_code }}">
+        </div>
+        <div id="div_id_message" class="form-group">
+          <label for="id_message" class=" requiredField">Message<span class="asteriskField">*</span></label>
+          <textarea name="message" cols="40" rows="4" class="textarea form-control" required id="id_message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+      </form>
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endblock content %}

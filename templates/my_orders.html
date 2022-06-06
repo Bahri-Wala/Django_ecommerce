@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    My Orders
+{% endblock title %}
+{% block content %}
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+      <h2>My Latest Orders</h2>
+      <table class="table table-hover " >
+        <thead>
+          <tr>
+            <th>Reference Code</th>
+            <th>Billing Address</th>
+            <th>Shipping Address</th>
+            <th>Price</th>
+            <th>Ordered Date</th>
+            <th>Refund</th>
+          </tr>
+        </thead>
+        <tbody id="myTable">
+        {% for order in orders %}
+          <tr>
+            <td>{{ order.ref_code }}</td>
+            <td>{{ order.billing_address }}</td>
+            <td>{{ order.shipping_address }}</td>
+            <td>${{ order.payment.amount }}</td>
+            <td>{{ order.ordered_date|date }}</td>
+            {% if not order.refund_request %}
+              <td class="py-2"><a href="{% url "core:request_refund" order.ref_code %}"><button class="btn btn-danger py-2" style="height: 30px;width:130px">Request</button></a></td>
+            {% else %}
+              <td class="py-2"><button class="btn btn-danger py-2 disabled" style="height: 30px;width:130px;opacity: 0.5">Sent</button></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endblock content %}
